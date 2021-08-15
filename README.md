@@ -7,15 +7,29 @@
 # Install Windows and Office
 ## Windows
 
-Download the **Media Creation Tool** (Windows) or the ISO (other OS) here: https://microsoft.com/software-download/
-
-Run the tool to create an installation media or burn the ISO.
+1. Download the **Media Creation Tool** (Windows) or the ISO (other OS) here: https://microsoft.com/software-download
+1. Run the tool to create an installation media or burn the ISO.
 
 ## Office
+### Script
 
-Download XML config file from this repository (for Volume Licensing or 365) or generate online with the Office **Customization Tool**: https://config.office.com/deploymentsettings
+- Download XML config file from this repository (for Volume Licensing or 365) or generate online with the **Office Customization Tool**: https://config.office.com/deploymentsettings and save it as *office-config.xml* in the Downloads directory
+- Run *office-install.ps1* script as administrator
 
-Download the **Office Deployment Tool**: https://microsoft.com/download/confirmation.aspx?id=49117
+If your executionpolicy doesn't allow the script, run this command in PowerShell as Administrator: 
+```
+powershell -executionpolicy bypass -file "$home/downloads/office-install.ps1"
+```
+
+### Manually
+
+- Download XML config file from this repository (for Volume Licensing or 365) or generate online with the Office **Customization Tool**: https://config.office.com/deploymentsettings and save it as *office-config.xml* in the Downloads directory
+- Download the **Office Deployment Tool** and save it in the Downloads directory: https://microsoft.com/download/confirmation.aspx?id=49117
+- Run it and choose a directory to extract.
+- Open PowerShell as Administrator and run these commands successively: 
+    - change to the previously chosen directory, e.g. `cd "$home/downloads/ms-activation/"`
+    - `"./setup.exe" /download "../office-config.xml"`
+    - `"./setup.exe" /configure "../office-config.xml"`
 
 Note: You will need the 365 config, if you want to login with a school/work account.
 
