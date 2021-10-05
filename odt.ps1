@@ -39,6 +39,7 @@ Write-Host "`nIf you run into problems, try deleting this folder:`n$_dir`n"
 #if (Test-Path $_dir) { Remove-Item -Recurse "$_dir" }
 
 New-Item -Force -ItemType Directory "$_dir" | Out-Null
+Set-Location "$_dir"
 Invoke-WebRequest -Uri "$_url" -OutFile "$_dir/odt.exe"
 Start-Process -Wait -FilePath "$_dir/odt.exe" -ArgumentList "/extract:`"$(NormalizePathWin("$_dir"))`" /quiet /passive /norestart"
 Remove-Item -Force "$_dir/configuration-office*.xml"
