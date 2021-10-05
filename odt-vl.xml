@@ -1,18 +1,21 @@
-<Configuration ID="a29cfcd1-99bd-4c94-8a6b-58deac8807be">
-  <Add OfficeClientEdition="64" Channel="PerpetualVL2019">
-    <Product ID="ProPlus2019Volume" PIDKEY="NMMKJ-6RK4F-KMJVX-8D9MJ-6MWKP">
+<Configuration ID="ca4d526b-2b0c-4c1c-ab8e-c3c2d3474e9e">
+  <Add OfficeClientEdition="64" Channel="PerpetualVL2021">
+    <Product ID="ProPlus2021Volume" PIDKEY="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH">
       <Language ID="MatchOS" />
       <Language ID="en-us" />
-      <ExcludeApp ID="Groove" />
+      <Language ID="de-de" />
       <ExcludeApp ID="Lync" />
       <ExcludeApp ID="OneDrive" />
+      <ExcludeApp ID="Teams" />
     </Product>
     <Product ID="LanguagePack">
       <Language ID="MatchOS" />
       <Language ID="en-us" />
+      <Language ID="de-de" />
     </Product>
     <Product ID="ProofingTools">
       <Language ID="en-us" />
+      <Language ID="de-de" />
     </Product>
   </Add>
   <Property Name="SharedComputerLicensing" Value="0" />
