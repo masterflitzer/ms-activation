@@ -7,8 +7,6 @@ $ErrorActionPreference = "Stop"
 
 function IsNullOrWhiteSpace ([string]$s) { return [string]::IsNullOrWhiteSpace($s) }
 
-function IsPathFullyQualified ([string]$path) { return [System.IO.Path]::IsPathFullyQualified($path) }
-
 function NormalizePath ([string]$path) { return $path.Replace('\', '/').ToLower() }
 
 function NormalizePathWin ([string]$path) { return $path.Replace('/', '\').ToLower() }
@@ -35,7 +33,8 @@ if (IsNullOrWhiteSpace($_config)) { $_config = GetFilePath($_home) }
 if (IsNullOrWhiteSpace($_config) -or !IsPathFullyQualified($_config)) { exit 1 }
 $_config = NormalizePath($_config)
 
-Write-Host "`nIf you run into problems, try deleting this folder:`n$_dir`n"
+Write-Host "`nIf you run into problems, try deleting this folder:"
+Write-Host "$_dir`n"
 #if (Test-Path $_dir) { Remove-Item -Recurse "$_dir" }
 
 New-Item -Force -ItemType Directory "$_dir" | Out-Null
