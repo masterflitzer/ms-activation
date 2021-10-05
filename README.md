@@ -1,36 +1,31 @@
-# Activate Windows and Office
-
-**Microsoft-Activation-Scripts** by *massgravel*: https://github.com/massgravel/Microsoft-Activation-Scripts.git
-
-**KMS_VL_ALL** by *kkkgo*: https://github.com/kkkgo/KMS_VL_ALL.git
+# Activate Microsoft Windows / Microsoft Office
+- **Microsoft-Activation-Scripts** by *massgravel*: https://github.com/massgravel/Microsoft-Activation-Scripts.git (Windows with HWID and Office with KMS)
+- **KMS_VL_ALL** by *kkkgo*: https://github.com/kkkgo/KMS_VL_ALL.git (Windows and Office with KMS)
 
 # Install Windows and Office
 ## Windows
-
-1. Download the **Media Creation Tool** (Windows) or the ISO (other OS) here: https://microsoft.com/software-download
-1. Run the tool to create an installation media or burn the ISO.
+1. Download the **Media Creation Tool** or the image (ISO) here: https://microsoft.com/software-download
+1. Create your installation media
 
 ## Office
+- Download XML config file from this repository (for Volume Licensing or 365) or generate online with the **Office Customization Tool**: https://config.office.com/deploymentsettings and save it as *odt.xml* (e.g. `$home/downloads/odt.xml`)
+
 ### Script
+- Download and run the script *odt.ps1*
 
-- Download XML config file from this repository (for Volume Licensing or 365) or generate online with the **Office Customization Tool**: https://config.office.com/deploymentsettings and save it as *config-office.xml* in the Downloads directory
-- Run *office-install.ps1* script as administrator
+If your executionpolicy doesn't allow the script, run these commands in PowerShell as Administrator and try again: 
+- `Set-ExecutionPolicy RemoteSigned`
+- `Unblock-File "$home/downloads/odt.ps1"`
 
-If your executionpolicy doesn't allow the script, run this command in PowerShell as Administrator: 
-```
-powershell -executionpolicy bypass -file "$home/downloads/office-install.ps1"
-```
-
-### Manually
-
-- Download XML config file from this repository (for Volume Licensing or 365) or generate online with the Office **Customization Tool**: https://config.office.com/deploymentsettings and save it as *config-office.xml* in the Downloads directory
+### Manual
 - Download the **Office Deployment Tool** and save it in the Downloads directory: https://microsoft.com/download/confirmation.aspx?id=49117
-- Run it and choose a directory to extract.
-- Open PowerShell as Administrator and run these commands successively: 
-    - change to the previously chosen directory, e.g. `cd "$home/downloads/ms-activation/"`
-    - `"./setup.exe" /download "../config-office.xml"`
-    - `"./setup.exe" /configure "../config-office.xml"`
+- Run it and extract in a directory of your choice (e.g. $home/documents/office-deployment-tool)
+- Open PowerShell and run these commands successively: 
+    - `& "$home/documents/office-deployment-tool/setup.exe" /download "$home\downloads\odt.xml"`
+    - `& "$home/documents/office-deployment-tool/setup.exe" /configure "$home\downloads\odt.xml"`
 
-Note: You will need the 365 config, if you want to login with a school/work account.
+# Notes: 
+- If you want to activate your installation with a microsoft account (paid 365 account), choose the 356 config
+- If you want to activate your installation with KMS (using one of the activation methods found above), choose the volume licensing (vl) config
 
-You can read more about the [Office Customization Tool](https://docs.microsoft.com/deployoffice/overview-of-the-office-customization-tool-for-click-to-run) or the [Office Deployment Tool](https://docs.microsoft.com/deployoffice/overview-office-deployment-tool).
+Here you can read more about the [Office Customization Tool](https://docs.microsoft.com/deployoffice/overview-of-the-office-customization-tool-for-click-to-run) or the [Office Deployment Tool](https://docs.microsoft.com/deployoffice/overview-office-deployment-tool).
