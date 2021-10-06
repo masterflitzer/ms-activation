@@ -23,6 +23,8 @@ If your executionpolicy doesn't allow the script, run these commands in PowerShe
 -   `Set-ExecutionPolicy RemoteSigned`
 -   `Unblock-File "$home/downloads/odt.ps1"`
 
+Alternatively run the cmd wrapper _odt.cmd_
+
 ### Manual
 
 -   Download the **Office Deployment Tool** and save it in the Downloads directory: https://microsoft.com/download/confirmation.aspx?id=49117
