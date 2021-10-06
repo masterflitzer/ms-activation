@@ -14,7 +14,7 @@
 
 -   Download XML config file from this repository (for Volume Licensing or 365) or generate online with the **Office Customization Tool**: https://config.office.com/deploymentsettings and save it as _odt.xml_ (e.g. `$home/downloads/odt.xml`)
 
-If you want to deploy the beta, change channel in the 2nd line to: `Channel="BetaChannel"`
+If you want to deploy the beta, change channel in the 2nd line to: `Channel="BetaChannel"` (probably only works with 365 version)
 
 ### Script
 
