@@ -4,6 +4,7 @@ param (
 )
 
 $ErrorActionPreference = "Stop"
+$ProgressPreference = "SilentlyContinue"
 
 function IsNullOrWhiteSpace ([string]$s) { return [string]::IsNullOrWhiteSpace($s) }
 
@@ -36,13 +37,23 @@ $_config = NormalizePath($_config)
 Write-Host "`nIf you run into problems, try deleting this folder:"
 Write-Host "$_dir`n"
 
-New-Item -Force -ItemType Directory "$_dir" | Out-Null
+if (!(Test-Path "$_dir")) { New-Item -Force -ItemType Directory "$_dir" | Out-Null }
 Set-Location "$_dir"
-Invoke-WebRequest -Uri "$_url" -OutFile "$_dir/odt.exe"
+
+if (!(Test-Path "$_dir/odt.exe")) {
+    Write-Host "Downloading Office Deployment Tool..."
+    Invoke-WebRequest -Uri "$_url" -OutFile "$_dir/odt.exe"
+}
+
+Write-Host "Extracting Office Deployment Tool..."
 Start-Process -Wait -FilePath "$_dir/odt.exe" -ArgumentList "/extract:`"$(NormalizePathWin("$_dir"))`" /quiet /passive /norestart"
 Remove-Item -Force "$_dir/configuration-office*.xml"
+
+Write-Host "Downloading Office..."
 & "$_dir/setup.exe" /download "$_config"
+Write-Host "Installing Office..."
 & "$_dir/setup.exe" /configure "$_config"
 
+Write-Host "Done!`n"
 Write-Host -NoNewline "Press any key to continue..."
 [System.Console]::ReadKey($true) | Out-Null
