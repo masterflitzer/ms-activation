@@ -35,7 +35,6 @@ $_config = NormalizePath($_config)
 
 Write-Host "`nIf you run into problems, try deleting this folder:"
 Write-Host "$_dir`n"
-#if (Test-Path $_dir) { Remove-Item -Recurse "$_dir" }
 
 New-Item -Force -ItemType Directory "$_dir" | Out-Null
 Set-Location "$_dir"
