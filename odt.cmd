@@ -1,0 +1,1 @@
+powershell -executionpolicy bypass -nologo -command "./odt.ps1"
