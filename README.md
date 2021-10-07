@@ -1,4 +1,4 @@
-# Activate Microsoft Windows / Microsoft Office
+# Activate Microsoft Windows / Office
 
 -   **Microsoft-Activation-Scripts** by _massgravel_: https://github.com/massgravel/Microsoft-Activation-Scripts.git (Windows with HWID and Office with KMS)
 -   **KMS_VL_ALL** by _kkkgo_: https://github.com/kkkgo/KMS_VL_ALL.git (Windows and Office with KMS)
