@@ -12,20 +12,20 @@
 
 ## Office
 
--   Download XML config file from this repository (for Volume Licensing or 365) or generate online with the **Office Customization Tool**: https://config.office.com/deploymentsettings and save it as _odt.xml_ (e.g. `$home/downloads/odt.xml`)
+-   Download XML config file from this repository (for Volume Licensing or 365) or generate online with the **Office Customization Tool**: https://config.office.com/deploymentsettings and save it as **odt.xml** (e.g. `$home/downloads/odt.xml`)
 
 If you want to deploy the beta, change channel in the 2nd line to: `Channel="BetaChannel"` (probably only works with 365 version)
 
 ### Script
 
--   Download and run the script _odt.ps1_
+-   Download and run the script **odt.ps1**
 
 If your executionpolicy doesn't allow the script, run these commands in PowerShell as Administrator and try again:
 
 -   `Set-ExecutionPolicy RemoteSigned`
 -   `Unblock-File "$home/downloads/odt.ps1"`
 
-Alternatively run the cmd wrapper _odt.cmd_
+Alternatively run the cmd wrapper **odt.cmd**
 
 ### Manual
 
