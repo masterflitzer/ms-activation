@@ -6,11 +6,17 @@ param (
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
+$_config = $config
+$_url = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_14326-20404.exe"
+$_home = [Environment]::GetFolderPath("UserProfile")
+
 function IsNullOrWhiteSpace ([string]$s) { return [string]::IsNullOrWhiteSpace($s) }
 
-function NormalizePath ([string]$path) { return $path.Replace('\', '/').ToLower() }
+function EliminateMultipleSlash ([string]$s) { return [Regex]::Replace($s, "//+", "/") }
 
-function NormalizePathWin ([string]$path) { return $path.Replace('/', '\').ToLower() }
+function NormalizePath ([string]$s) { return EliminateMultipleSlash($s.Replace('~', $_home).Replace('\', '/')).ToLower() }
+
+function NormalizePathWin ([string]$s) { return NormalizePath($s).Replace('/', '\') }
 
 function GetFilePath {
     param (
@@ -25,10 +31,8 @@ function GetFilePath {
     return $_file.FileName
 }
 
-$_config = $config
-$_dir = NormalizePath([System.IO.Path]::Combine([Environment]::GetFolderPath('Personal'), "office-deployment-tool"))
-$_home = NormalizePath([Environment]::GetFolderPath('UserProfile'))
-$_url = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_14326-20404.exe"
+$_downloads = NormalizePath([System.IO.Path]::Combine($_home, "Downloads"))
+$_dir = NormalizePath([System.IO.Path]::Combine($_downloads, "office-deployment-tool"))
 
 if (IsNullOrWhiteSpace($_config)) { $_config = GetFilePath($_home) }
 if (IsNullOrWhiteSpace($_config) -or !IsPathFullyQualified($_config)) { exit 1 }
