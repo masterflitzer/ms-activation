@@ -14,7 +14,7 @@ function IsNullOrWhiteSpace ([string]$s) { return [string]::IsNullOrWhiteSpace($
 
 function EliminateMultipleSlash ([string]$s) { return [Regex]::Replace($s, "//+", "/") }
 
-function NormalizePath ([string]$s) { return EliminateMultipleSlash($s.Replace('~', $_home).Replace('\', '/')).ToLower() }
+function NormalizePath ([string]$s) { return EliminateMultipleSlash($s.Replace('~', $_home).Replace('\', '/')) }
 
 function NormalizePathWin ([string]$s) { return NormalizePath($s).Replace('/', '\') }
 
