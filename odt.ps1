@@ -1,63 +1,103 @@
+[CmdletBinding()]
 param (
-    [Parameter(Mandatory = $false, Position = 0)]
-    [string] $config = $null
+    [string] $Config = $null
 )
 
+Set-StrictMode -Version 3
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
-$_config = $config
-$_url = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_14326-20404.exe"
-$_home = [Environment]::GetFolderPath("UserProfile")
+$myHome = [Environment]::GetFolderPath("UserProfile")
+$url = "https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_14326-20404.exe"
 
-function IsNullOrWhiteSpace ([string]$s) { return [string]::IsNullOrWhiteSpace($s) }
+function IsNullOrWhiteSpace ([string]$s) {
+    return [string]::IsNullOrWhiteSpace($s)
+}
 
-function EliminateMultipleSlash ([string]$s) { return [Regex]::Replace($s, "//+", "/") }
+function EliminateMultipleSlash ([string]$s) {
+    return [Regex]::Replace($s, "//+", "/")
+}
 
-function NormalizePath ([string]$s) { return EliminateMultipleSlash($s.Replace('~', $_home).Replace('\', '/')) }
+function NormalizePath ([string]$s) {
+    return EliminateMultipleSlash $s.Replace('~', $myHome).Replace('\', '/')
+}
 
-function NormalizePathWin ([string]$s) { return NormalizePath($s).Replace('/', '\') }
+function NormalizePathWin ([string]$s) {
+    return $(NormalizePath $s).Replace('/', '\')
+}
+
+function ThrowInvalidPath ([string]$s) {
+    if ($null -eq $s) {
+        $x = "!"
+    } else {
+        $x = ": $s"
+    }
+    throw "Invalid path to config file$x"
+}
 
 function GetFilePath {
     param (
         [Parameter(Mandatory = $true)]
-        [string]$initialDir
+        [string]$InitialDir
     )
-    Add-Type -AssemblyName "system.windows.forms"
-    $_file = New-Object System.Windows.Forms.OpenFileDialog
-    $_file.InitialDirectory = $initialDir
-    $_file.Multiselect = $false
-    $_file.ShowDialog() | Out-Null
-    return $_file.FileName
+    Add-Type -AssemblyName "System.Windows.Forms"
+    $fileDialog = [System.Windows.Forms.OpenFileDialog]::new()
+    $fileDialog.InitialDirectory = $InitialDir
+    $fileDialog.Multiselect = $false
+    $fileDialog.ShowDialog() > $null
+    $filePath = $fileDialog.FileName
+    if ($null -ne $filePath -or "" -ne $filePath -or $(Test-Path -PathType Leaf $filePath)) {
+        return $filePath
+    } else {
+        return $null
+    }
 }
 
-$_downloads = NormalizePath([System.IO.Path]::Combine($_home, "Downloads"))
-$_dir = NormalizePath([System.IO.Path]::Combine($_downloads, "office-deployment-tool"))
+$dir = NormalizePath $([System.IO.Path]::Combine(
+        $myHome,
+        "Downloads",
+        "office-deployment-tool"
+    ))
+$file = "$dir/odt.exe"
+$setup = "$dir/setup.exe"
 
-if (IsNullOrWhiteSpace($_config)) { $_config = GetFilePath($_home) }
-if (IsNullOrWhiteSpace($_config) -or !IsPathFullyQualified($_config)) { exit 1 }
-$_config = NormalizePath($_config)
-
-Write-Host "`nIf you run into problems, try deleting this folder:"
-Write-Host "$_dir`n"
-
-if (!(Test-Path "$_dir")) { New-Item -Force -ItemType Directory "$_dir" | Out-Null }
-Set-Location "$_dir"
-
-if (!(Test-Path "$_dir/odt.exe")) {
-    Write-Host "Downloading Office Deployment Tool..."
-    Invoke-WebRequest -Uri "$_url" -OutFile "$_dir/odt.exe"
+if (IsNullOrWhiteSpace $Config) {
+    $path = GetFilePath -InitialDir $myHome
+    if ($null -eq $path) {
+        ThrowInvalidPath
+    }
+    $Config = $path
 }
 
-Write-Host "Extracting Office Deployment Tool..."
-Start-Process -Wait -FilePath "$_dir/odt.exe" -ArgumentList "/extract:`"$(NormalizePathWin("$_dir"))`" /quiet /passive /norestart"
-Remove-Item -Force "$_dir/configuration-office*.xml"
+$Config = NormalizePath $Config
 
-Write-Host "Downloading Office..."
-& "$_dir/setup.exe" /download "$_config"
-Write-Host "Installing Office..."
-& "$_dir/setup.exe" /configure "$_config"
+if (!(Test-Path -PathType Leaf $Config)) {
+    ThrowInvalidPath $Config
+}
 
-Write-Host "Done!`n"
-Write-Host -NoNewline "Press any key to continue..."
-[System.Console]::ReadKey($true) | Out-Null
+Write-Output "`nIf you run into problems, try deleting this folder:`n"
+Write-Output "`tRemove-Item -Recurse `"$dir`" -Force`n"
+
+if (!(Test-Path -PathType Container $dir)) {
+    New-Item -ItemType Directory $dir -Force > $null
+}
+
+Set-Location $dir
+
+if (!(Test-Path -PathType Leaf $file)) {
+    Write-Output "Downloading Office Deployment Tool..."
+    Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $file
+}
+
+Write-Output "Extracting Office Deployment Tool..."
+Start-Process -Wait -FilePath $file -ArgumentList "/extract:`"$(NormalizePathWin $dir)`" /quiet /passive /norestart"
+Remove-Item "$dir/configuration-office*.xml" -Force
+
+Write-Output "Downloading Office..."
+& $setup /download $Config
+Write-Output "Installing Office..."
+& $setup /configure $Config
+
+Write-Output "Done!`n"
+Write-Output "Press any key to continue..."
+[System.Console]::ReadKey($true) > $null
