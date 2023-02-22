@@ -8,6 +8,8 @@ Set-StrictMode -Version 3
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
+$homeDir = [System.Environment]::GetFolderPath("UserProfile")
+
 function EliminateMultipleSlash {
     [CmdletBinding()]
     param (
@@ -45,7 +47,6 @@ function GetFileDialog {
     return $file
 }
 
-$homeDir = [System.Environment]::GetFolderPath("UserProfile")
 $oldDir = Get-Location
 $newDir = [System.IO.Path]::Combine(
     $homeDir,
@@ -57,31 +58,31 @@ $setup = "$newDir/setup.exe"
 if (!$config) {
     Write-Output "Please select the config file"
     $config = GetFileDialog | NormalizePath
-}
 
-if (!$config -or !(Test-Path -PathType Leaf $config)) {
-    throw "Invalid path to config file"
+    if (!$config) {
+        throw "Invalid path to config file"
+    }
 }
 
 if (!$tool) {
     Write-Output "Opening download page for the Office Deployment Tool (ODT)"
-    Start-Process "https://microsoft.com/download/details.aspx?id=49117"
     Write-Output "Please download ODT and select the downloaded file in this prompt"
+    Start-Process "https://microsoft.com/download/details.aspx?id=49117"
     $tool = GetFileDialog | NormalizePath
-}
-
-if (!$tool -or !(Test-Path -PathType Leaf $tool)) {
-    throw "Invalid path to ODT file"
+    
+    if (!$tool) {
+        throw "Invalid path to ODT file"
+    }
 }
 
 Write-Output "`nIf you run into problems, try deleting this folder:`n"
 Write-Output "`tRemove-Item -Recurse `"$newDir`" -Force`n"
 
-if (!$newDir -or !(Test-Path -PathType Container $newDir)) {
+if (Test-Path $newDir) {
     Remove-Item -Recurse $newDir -Force
-    New-Item -ItemType Directory $newDir -Force > $null
 }
 
+New-Item -ItemType Directory $newDir -Force > $null
 Set-Location $newDir
 
 Write-Output "Extracting Office Deployment Tool..."
