@@ -1,17 +1,21 @@
-<Configuration ID="ca4d526b-2b0c-4c1c-ab8e-c3c2d3474e9e">
-  <Add OfficeClientEdition="64" Channel="PerpetualVL2021">
-    <Product ID="ProPlus2021Volume" PIDKEY="FXYTK-NJJ8C-GB6DW-3DYQT-6F7TH">
+<Configuration ID="2bddf917-f433-4d97-8330-2864e9e499b2">
+  <Add OfficeClientEdition="64" Channel="Current" MigrateArch="TRUE">
+    <Product ID="O365ProPlusRetail">
       <Language ID="MatchOS" />
       <Language ID="en-us" />
       <Language ID="de-de" />
+      <Language ID="MatchPreviousMSI" />
+      <ExcludeApp ID="Groove" />
       <ExcludeApp ID="Lync" />
       <ExcludeApp ID="OneDrive" />
-      <ExcludeApp ID="Teams" />
+      <ExcludeApp ID="Bing" />
     </Product>
     <Product ID="LanguagePack">
       <Language ID="MatchOS" />
       <Language ID="en-us" />
       <Language ID="de-de" />
+      <Language ID="MatchPreviousMSI" />
+      <ExcludeApp ID="Bing" />
     </Product>
     <Product ID="ProofingTools">
       <Language ID="en-us" />
@@ -19,10 +23,9 @@
     </Product>
   </Add>
   <Property Name="SharedComputerLicensing" Value="0" />
-  <Property Name="SCLCacheOverride" Value="0" />
-  <Property Name="AUTOACTIVATE" Value="0" />
   <Property Name="FORCEAPPSHUTDOWN" Value="TRUE" />
   <Property Name="DeviceBasedLicensing" Value="0" />
+  <Property Name="SCLCacheOverride" Value="0" />
   <Updates Enabled="TRUE" />
   <RemoveMSI />
   <AppSettings>
