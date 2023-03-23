@@ -15,7 +15,7 @@
 ### Office
 
 - Generate your XML config file with the [Office Customization Tool](https://config.office.com/deploymentsettings)
-- Save it (e.g. as `$HOME/Downloads/office-deployment-tool/config.xml`)
+- Save it (e.g. as `$HOME/Downloads/office.xml`)
 
 Alternatively download one of the preconfigured config files from this repository
 
@@ -25,16 +25,17 @@ Alternatively download one of the preconfigured config files from this repositor
 
 ```pwsh
 # Volume Licensing (VL)
-irm -o $HOME/Downloads/office-deployment-tool/config.xml https://github.com/masterflitzer/ms-activation/raw/main/config-vl.xml
+irm -o "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-vl.xml
+
 # Microsoft 365
-irm -o $HOME/Downloads/office-deployment-tool/config.xml https://github.com/masterflitzer/ms-activation/raw/main/config-365.xml
+irm -o "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-365.xml
 ```
 
 If you want to deploy the beta, change the channel in the 2nd line to `Channel="BetaChannel"` (will probably only work with the **365** version)
 
 #### Script
 
-- Open PowerShell and execute this oneliner
+- Open PowerShell, execute this oneliner and follow the instructions
 
 ```pwsh
 irm https://github.com/masterflitzer/ms-activation/raw/main/office.ps1 | iex
@@ -50,12 +51,12 @@ irm -o $HOME/Downloads/office.ps1 https://github.com/masterflitzer/ms-activation
 
 - Run the script
 
-You can optionally provide paths to config and office deployment tool respectively, otherwise the script will ask you interactively
+You can optionally specify the path to the config file or the office deployment tool, otherwise the script will ask you interactively
 
 - `& $HOME/Downloads/office.ps1`
-- `& $HOME/Downloads/office.ps1 -config $HOME/Downloads/office-deployment-tool/config.xml -tool $HOME/Downloads/odt.exe`
+- `& $HOME/Downloads/office.ps1 -config $HOME/Downloads/office.xml -tool $HOME/Downloads/odt.exe`
 
-If your ExecutionPolicy does not allow the execution of the script, run these commands and try running it again:
+If your ExecutionPolicy does not allow the execution of the script, run these commands and try again:
 
 ```pwsh
 Set-ExecutionPolicy RemoteSigned -Scope Process
@@ -70,8 +71,9 @@ Unblock-File $HOME/Downloads/office.ps1
 - Open PowerShell and run these commands successively:
 
 ```pwsh
-& "$HOME/Downloads/office-deployment-tool/setup.exe" /download "$HOME/Downloads/office-deployment-tool/config.xml"
-& "$HOME/Downloads/office-deployment-tool/setup.exe" /configure "$HOME/Downloads/office-deployment-tool/config.xml"
+cd "$HOME/Downloads/office-deployment-tool"
+./setup.exe /download "$HOME/Downloads/office.xml"
+./setup.exe /configure "$HOME/Downloads/office.xml"
 ```
 
 ## Notes

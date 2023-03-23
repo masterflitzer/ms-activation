@@ -47,13 +47,18 @@ function GetFileDialog {
     return $file
 }
 
-$oldDir = Get-Location
+$oldDir = Get-Location | NormalizePath
 $newDir = [System.IO.Path]::Combine(
     $homeDir,
     "Downloads",
     "office-deployment-tool"
 ) | NormalizePath
 $setup = "$newDir/setup.exe"
+
+if ($oldDir -eq $newDir) {
+    Set-Location ..
+    $oldDir = Get-Location | NormalizePath
+}
 
 if (!$config) {
     Write-Output "Please select the config file"
@@ -78,11 +83,7 @@ if (!$tool) {
 Write-Output "`nIf you run into problems, try deleting this folder:`n"
 Write-Output "`tRemove-Item -Recurse `"$newDir`" -Force`n"
 
-if (Test-Path $newDir) {
-    Remove-Item -Recurse $newDir -Force
-}
-
-New-Item -ItemType Directory $newDir -Force > $null
+New-Item -ItemType Directory $newDir -Force -ErrorAction SilentlyContinue > $null
 Set-Location $newDir
 
 Write-Output "Extracting Office Deployment Tool..."
