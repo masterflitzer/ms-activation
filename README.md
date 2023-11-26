@@ -2,8 +2,8 @@
 
 ## Activation
 
-- [**Microsoft-Activation-Scripts** by _massgravel_](https://github.com/massgravel/Microsoft-Activation-Scripts.git): Windows with HWID and Office with KMS
-- [**KMS_VL_ALL** by _kkkgo_](https://github.com/kkkgo/KMS_VL_ALL.git): Windows and Office with KMS
+- [**Microsoft-Activation-Scripts** by _massgravel_](https://github.com/massgravel/Microsoft-Activation-Scripts.git)
+- [**KMS_VL_ALL** by _kkkgo_](https://github.com/kkkgo/KMS_VL_ALL.git)
 
 ## Install
 
@@ -20,47 +20,23 @@
 Alternatively download one of the preconfigured config files from this repository
 
 - Depending on your preferred activation method, you'll need to choose a corresponding configuration
-  - Activate with KMS (Volume Licensing): `config-vl.xml`
-  - Activate with Microsoft 365 account: `config-365.xml`
+  - Activate with Microsoft 365 account: `config-microsoft-365.xml`
+  - Activate with Volume License (VL): `config-volume-license.xml`
 
 ```pwsh
-# Volume Licensing (VL)
-irm -o "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-vl.xml
-
 # Microsoft 365
-irm -o "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-365.xml
+irm -OutFile "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-microsoft-365.xml
+
+# Volume License (VL)
+irm -OutFile "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-volume-license.xml
 ```
 
-If you want to deploy the beta, change the channel in the 2nd line to `Channel="BetaChannel"` (will probably only work with the **365** version)
+#### Automatic
 
-#### Script
-
-- Open PowerShell, execute this oneliner and follow the instructions
+- Open PowerShell, execute this one liner and follow the instructions
 
 ```pwsh
 irm https://github.com/masterflitzer/ms-activation/raw/main/office.ps1 | iex
-```
-
-Alternatively:
-
-- Download the script
-
-```pwsh
-irm -o $HOME/Downloads/office.ps1 https://github.com/masterflitzer/ms-activation/raw/main/office.ps1
-```
-
-- Run the script
-
-You can optionally specify the path to the config file or the office deployment tool, otherwise the script will ask you interactively
-
-- `& $HOME/Downloads/office.ps1`
-- `& $HOME/Downloads/office.ps1 -config $HOME/Downloads/office.xml -tool $HOME/Downloads/odt.exe`
-
-If your ExecutionPolicy does not allow the execution of the script, run these commands and try again:
-
-```pwsh
-Set-ExecutionPolicy RemoteSigned -Scope Process
-Unblock-File $HOME/Downloads/office.ps1
 ```
 
 #### Manual
@@ -78,4 +54,4 @@ cd "$HOME/Downloads/office-deployment-tool"
 
 ## Notes
 
-Here you can read more about the [Office Customization Tool](https://docs.microsoft.com/deployoffice/overview-of-the-office-customization-tool-for-click-to-run) or the [Office Deployment Tool](https://docs.microsoft.com/deployoffice/overview-office-deployment-tool).
+Here you can read more about the [Office Customization Tool](https://docs.microsoft.com/deployoffice/overview-of-the-office-customization-tool-for-click-to-run) or the [Office Deployment Tool](https://docs.microsoft.com/deployoffice/overview-office-deployment-tool)
