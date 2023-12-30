@@ -20,15 +20,15 @@
 Alternatively download one of the preconfigured config files from this repository
 
 - Depending on your preferred activation method, you'll need to choose a corresponding configuration
-  - Activate with Microsoft 365 account: `config-microsoft-365.xml`
-  - Activate with Volume License (VL): `config-volume-license.xml`
+  - Activate with Microsoft 365 account: `office-microsoft-365.xml`
+  - Activate with Volume License (VL): `office-volume-license.xml`
 
 ```pwsh
 # Microsoft 365
-irm -OutFile "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-microsoft-365.xml
+irm -OutFile "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/office-microsoft-365.xml
 
 # Volume License (VL)
-irm -OutFile "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/config-volume-license.xml
+irm -OutFile "$HOME/Downloads/office.xml" https://github.com/masterflitzer/ms-activation/raw/main/office-volume-license.xml
 ```
 
 #### Automatic
