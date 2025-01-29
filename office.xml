@@ -1,23 +1,23 @@
-<Configuration ID="589cc87b-1d2b-42d3-83d1-0aa5907a9a7d">
+<Configuration ID="992f0920-6709-4e35-9567-2c2d9c37dc98">
   <Add OfficeClientEdition="64" Channel="Current" MigrateArch="TRUE">
     <Product ID="O365ProPlusEEANoTeamsRetail">
       <Language ID="MatchOS" />
       <Language ID="en-us" />
-      <Language ID="de-de" />
       <Language ID="MatchPreviousMSI" />
       <ExcludeApp ID="Groove" />
       <ExcludeApp ID="Lync" />
       <ExcludeApp ID="OneDrive" />
+      <ExcludeApp ID="OneNote" />
+      <ExcludeApp ID="Bing" />
     </Product>
     <Product ID="LanguagePack">
       <Language ID="MatchOS" />
       <Language ID="en-us" />
-      <Language ID="de-de" />
       <Language ID="MatchPreviousMSI" />
+      <ExcludeApp ID="Bing" />
     </Product>
     <Product ID="ProofingTools">
       <Language ID="en-us" />
-      <Language ID="de-de" />
     </Product>
   </Add>
   <Property Name="SharedComputerLicensing" Value="0" />
