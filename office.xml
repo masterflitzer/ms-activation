@@ -1,4 +1,4 @@
-<Configuration ID="992f0920-6709-4e35-9567-2c2d9c37dc98">
+<Configuration ID="a865b5c9-5e20-4881-bf3a-ffce81202cca">
   <Add OfficeClientEdition="64" Channel="Current" MigrateArch="TRUE">
     <Product ID="O365ProPlusEEANoTeamsRetail">
       <Language ID="MatchOS" />
@@ -8,6 +8,7 @@
       <ExcludeApp ID="Lync" />
       <ExcludeApp ID="OneDrive" />
       <ExcludeApp ID="OneNote" />
+      <ExcludeApp ID="OutlookForWindows" />
       <ExcludeApp ID="Bing" />
     </Product>
     <Product ID="LanguagePack">

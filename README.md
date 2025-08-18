@@ -4,7 +4,17 @@
 
 - [**microsoft-activation-scripts** by _massgravel_](https://github.com/massgravel/microsoft-activation-scripts.git)
 
-## install
+```pwsh
+& {
+  $spm = [Net.ServicePointManager]
+  $spt = [Net.SecurityProtocolType]
+  $spm::SecurityProtocol = $spm::SecurityProtocol -bor $spt::Tls12 -bor $spt::Tls13
+
+  irm https://get.activated.win | iex
+}
+```
+
+## installation
 
 ### windows
 
@@ -12,15 +22,22 @@
 
 ### office
 
-#### automated
+#### automatic
 
-execute this one liner and follow the instructions to deploy office with the preconfigured office config file from this repository:
+- open powershell & execute this command block
+- follow the instructions to deploy office with the preconfigured office config file from this repository:
 
 ```pwsh
-irm "https://github.com/masterflitzer/ms-activation/raw/main/office.ps1" | iex
+& {
+  $spm = [Net.ServicePointManager]
+  $spt = [Net.SecurityProtocolType]
+  $spm::SecurityProtocol = $spm::SecurityProtocol -bor $spt::Tls12 -bor $spt::Tls13
+
+  irm https://github.com/masterflitzer/ms-activation/raw/main/office.ps1 | iex
+}
 ```
 
-#### manually
+#### manual
 
 get office deployment tool:
 
